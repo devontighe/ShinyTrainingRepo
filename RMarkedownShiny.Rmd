@@ -1,0 +1,19 @@
+---
+title: "Markdown + Shiny"
+author: "Devon Tighe"
+date: "17 February 2017"
+output: html_document
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+```{r}
+library(dplyr)
+library(ggplot2)
+library(tidyr)
+library(southafricastats)
+```
+
