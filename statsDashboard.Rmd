@@ -1,0 +1,50 @@
+---
+title: "Mortality in South Africa"
+output: 
+  flexdashboard::flex_dashboard:
+    orientation: columns
+    vertical_layout: fill
+runtime: shiny
+---
+
+```{r setup, include=FALSE}
+library(flexdashboard)
+library(southafricastats)
+library(dplyr)
+library(tidyr)
+
+totals <- population_zaf %>% 
+    filter(year == 2013) %>% 
+    select(province, total)
+
+compare_provinces <- mortality_zaf %>%
+    left_join(totals) %>%
+    mutate(rate = deaths / total * 1e3) %>%
+    group_by(province, indicator) %>%
+    summarise(rate = mean(rate)) %>%
+    ungroup %>%
+    left_join(totals) %>%
+    spread(indicator, rate)
+```
+
+Column {.sidebar}
+==================================================
+
+This app explores mortality data from the 
+[South Africa Data Portal](http://southafrica.opendataforafrica.org/).
+
+Use the input below to select a cause of death to explore.
+
+```{r}
+selectInput(inputId = "indicator", 
+            label = "Choose a cause of death:",
+            choices = sort(unique(mortality_zaf$indicator)),
+            selected = "All causes")
+```
+
+Map {data-icon="fa-map-marker"}
+==================================================
+
+### Where is the mortality rate highest?
+
+
