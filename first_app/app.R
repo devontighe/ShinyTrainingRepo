@@ -11,7 +11,7 @@ library(shiny)
 library(southafricastats)
 
 mortality <- mortality_zaf %>%
-  filter(indicator != "All causes"))
+  filter(indicator != "All causes")
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
