@@ -94,7 +94,9 @@ scatterplot_df <- reactive({
 
 renderPlot({
   ggplot(scatterplot_df(),
-       aes(`All causes`, indicator,
+       aes(x = selected_x,
+           y = selected_y,
+           size = total,
            label = province)) +
   geom_point(aes(size = total),
              alpha = 0.8, color = "midnightblue") +
