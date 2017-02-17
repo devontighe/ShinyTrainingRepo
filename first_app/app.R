@@ -8,6 +8,10 @@
 #
 
 library(shiny)
+library(southafricastats)
+
+mortality <- mortality_zaf %>%
+  filter(indicator != "All causes"))
 
 # Define UI for application that draws a histogram
 ui <- fluidPage(
@@ -20,12 +24,13 @@ ui <- fluidPage(
       sidebarPanel(
         selectInput(inputId = "province",
                     label = "Choose a province:",
-                    choice = unique(mortality_zaf$province))
+                    choice = unique(mortality_zaf$province),
+                    selected = "Gauteng")
       ), 
       
       # Show a plot
       mainPanel(
-         plotOutput("BarPlot")
+         plotOutput("LinePlot")
       )
    )
 )
@@ -33,8 +38,12 @@ ui <- fluidPage(
 # Define server logic required to draw a histogram
 server <- function(input, output) {
    
-   output$BarPlot <- renderPlot({
-
+   output$LinePlot <- renderPlot({
+     mortality %>%
+       filter(province == input$province) %>%
+       ggplot(aes(year, deaths, color = indicator)) +
+       geom_line(alpha = 0.8, size = 1.5) +
+       theme_minimal(base_size = 18)
    })
 }
 
