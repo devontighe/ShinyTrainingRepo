@@ -47,7 +47,7 @@ ggplot(compare_provinces,
 selectInput(inputId = "x_axis",
             label = "Choose the x axis:",
             choices = colnames(compare_provinces)[3:20],
-            selected = "Tuberculosis (A15-A19)")
+            totals = "Tuberculosis (A15-A19)")
 
 selectInput(inputId = "y_axis",
             label = "Choose the y axis:",
